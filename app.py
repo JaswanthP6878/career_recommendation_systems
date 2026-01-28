@@ -226,7 +226,7 @@ st.markdown(
     <div style="padding: 1rem; background-color: #f0f8ff; border-left: 4px solid #4CAF50; border-radius: 8px; font-size: 0.95rem;">
         <h4 style="margin-top: 0; font-size: 1rem;">📣 We'd love your feedback!</h4>
         <p style="margin-bottom: 0.5rem;">Help us improve the tool by sharing your thoughts.</p>
-        <a href="https://forms.gle/pGLd1D5WeZcvE8GS7" target="_blank" style="color: #1a73e8; font-weight: bold;">
+        <a href="https://forms.gle/6ikb3Ubmy31CbNyS8" target="_blank" style="color: #1a73e8; font-weight: bold;">
             Fill out our quick feedback form
         </a>
     </div>
