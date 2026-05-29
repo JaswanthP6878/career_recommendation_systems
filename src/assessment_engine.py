@@ -2,7 +2,7 @@ import streamlit as st
 #import pandas as pd
 
 
-def run_assessment(title, questions, category_mapping, session_key, return_page="app.py"):
+def run_assessment(title, questions, category_mapping, session_key, return_page="Tools/Recommender.py"):
     """
     Reusable Streamlit assessment engine.
 

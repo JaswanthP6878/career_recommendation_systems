@@ -1,5 +1,9 @@
 import os, base64
 import streamlit as st
+from src.ui import sidebar_settings, apply_styles
+
+sidebar_settings()
+apply_styles()
 
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
@@ -14,7 +18,7 @@ def logout():
         st.session_state.logged_in = False
         st.rerun()
 
-st.sidebar.image("Logo/young_aspiring_thinkers_logo.png")
+
 
 ### find icon in https://fonts.google.com/icons?utm_source=chatgpt.com
 
