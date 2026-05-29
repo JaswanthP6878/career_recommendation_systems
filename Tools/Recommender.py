@@ -1,22 +1,40 @@
 # app.py
-
+import os
 import streamlit as st
 from openai import OpenAI
+import google.generativeai as genai
 import torch
 import torch.nn.functional as F
 from transformers import AutoModel, AutoTokenizer
 from PIL import Image
 import base64
 
-st.set_page_config(page_title="Career Recommender", layout="centered")
+UseOpenAi = False
+for key in ["skills", "interests"]:
+    if f"selected_{key}" not in st.session_state:
+        st.session_state[f"selected_{key}"] = []
+
+#st.set_page_config(page_title="Career Recommender", layout="centered")
 
 
 # Convert local image to base64
 def get_base64_logo(path):
+    if not os.path.exists(path):
+        current_dir = os.path.dirname(os.path.realpath(__file__))
+        if os.path.exists(os.path.join("Logo", path)):
+            path = os.path.join("Logo", path)
+        elif os.path.exists(os.path.join(current_dir, path)):
+            path = os.path.join(current_dir, path)
+        elif os.path.exists(os.path.join(current_dir,"Logo", path)):
+            path = os.path.join(current_dir,"Logo", path)
+    print(path)
     with open(path, "rb") as image_file:
+        # if path.endswith('svg'):
+        #     return base64.b64encode(path.encode('utf-8')).decode("utf-8")
         return base64.b64encode(image_file.read()).decode()
 
 logo_base64 = get_base64_logo("young_aspiring_thinkers_logo.png")
+#logo_base64 = get_base64_logo("yat_logo_white.svg")
 
 # Inject fixed-position clickable logo in top-left corner
 # Inject fixed-position clickable logo (lower + larger)
@@ -107,33 +125,47 @@ st.write("Answer a few questions to get a personalized career suggestion!")
 interests = st.multiselect(
     "What are your interests?",
     ["Information Technology (IT)", "Business", "Healthcare", "Engineering", "Media", "Agriculture", "Finance", "AI", 
-     "Design", "Education", "Audit & Tax", "Mining", "Transportation & Logistics"]
+     "Design", "Education", "Audit & Tax", "Mining", "Transportation & Logistics"], 
+    default=st.session_state["selected_interests"] # Get Saved Interests from Session State
 )
+
+st.write("Don’t know your interests yet? Take the assessment:")
+
+if st.button("🧠 Take Interest Assessment"):
+    st.switch_page("pages/Interest.py") 
+
+# -----------------------------------
+# Skill Options
+# -----------------------------------
+
+skill_options = [
+    # WEF 2025 Core Skills
+    "Analytical Thinking", "Resilience, Flexibility & Agility", "Leadership & Social Influence",
+    "Creative Thinking", "Motivation & Self-awareness", "Technological Literacy",
+    "Empathy & Active Listening", "Curiosity & Lifelong Learning", "Talent Management",
+    "Service Orientation & Customer Service",
+
+    # Technical/Domain-Specific Skills
+    "Coding", "Math", "Data Analysis",
+    "Public Speaking", "Project Management", "Research",
+    "Financial Modeling"
+]
+
+# -----------------------------------
+# Multiselect
+# -----------------------------------
 
 skills = st.multiselect(
     "What skills do you have?",
-    [
-        # WEF 2025 Core Skills
-        "Analytical thinking",
-        "Resilience, flexibility and agility",
-        "Leadership and social influence",
-        "Creative thinking",
-        "Motivation and self-awareness",
-        "Technological literacy",
-        "Empathy and active listening",
-        "Curiosity and lifelong learning",
-        "Talent management",
-        "Service orientation and customer service",
-        # Technical/Domain-Specific Skills
-        "Coding",
-        "Math",
-        "Data Analysis",
-        "Public speaking",
-        "Project Management",
-        "Research",
-        "Financial Modeling"
-    ]
+    skill_options,
+    default=st.session_state["selected_skills"] # Get Saved Skills from Session State
 )
+
+
+st.write("Don’t know your skills yet? Take the assessment:")
+
+if st.button("🧠 Take Skill Assessment"):
+    st.switch_page("pages/Skill.py") 
 
 education = st.selectbox(
     "What is your current education level?",
@@ -152,14 +184,12 @@ def load_model():
 
 tokenizer, model = load_model()
 
-# === If user submits ===
+## === If user submits ===
 if submit:
-    # === Step 1: Generate starting job using ChatGPT ===
-    client = OpenAI(api_key=st.secrets["openai"]["api_key"])
-    # openai.api_key="anything"
-    # openai.base_url="http://localhost:3040/v1"
+    # === Step 1: Generate starting job using OpenAI/Gemini ===
     prompt = f"""
-    Based on the following student profile, suggest one starting job they could pursue after school (e.g., IT Assistant, Lab Technician, Sales Trainee). Be concise.
+    Based on the following student profile, suggest one starting job they could pursue after school 
+    (e.g., IT Assistant, Lab Technician, Sales Trainee). Be concise.
 
     Interests: {', '.join(interests)}
     Skills: {', '.join(skills)}
@@ -167,49 +197,85 @@ if submit:
 
     Only return the job title and nothing else.
     """
+    if UseOpenAi:
+        client = OpenAI(api_key=st.secrets["openai"]["api_key"])
+    else:
+        # Configure Gemini API
+        genai.configure(api_key=st.secrets["gemini"]["api_key"])
+        # Load Gemini model
+        gemini_model = genai.GenerativeModel("gemini-3.5-flash")
+
+
 
     try:
         with st.spinner("Thinking..."):
-            response = client.chat.completions.create(
-                model="gpt-3.5-turbo",
-                messages=[
-                    {"role": "system", "content": "You are a helpful career advisor."},
-                    {"role": "user", "content": prompt}
-                ]
-            )
-            starting_job = response.choices[0].message.content.strip()
+            if UseOpenAi:
+                response = client.chat.completions.create(
+                    model="gpt-3.5-turbo",
+                    messages=[
+                        {"role": "system", "content": "You are a helpful career advisor."},
+                        {"role": "user", "content": prompt}
+                    ]
+                )
+                starting_job = response.choices[0].message.content.strip()
+            else:
+                # Gemini response
+                response = gemini_model.generate_content(prompt)
+                starting_job = response.text.strip()
+
             st.success(f"🧭 Starting Role: {starting_job}")
 
             # === Step 2: Karrierewege inference ===
             candidate_jobs = [
-                "Software Developer", "Marketing Specialist", "Data Analyst",
-                "AI Researcher", "Mechanical Engineer", "Healthcare Assistant",
-                "Teacher", "Sales Manager", "UX Designer", "Lab Technician"
+                "Software Developer",
+                "Marketing Specialist",
+                "Data Analyst",
+                "AI Researcher",
+                "Mechanical Engineer",
+                "Healthcare Assistant",
+                "Teacher",
+                "Sales Manager",
+                "UX Designer",
+                "Lab Technician"
             ]
 
             # Embed history
             history_inputs = tokenizer(starting_job, return_tensors="pt")
+
             with torch.no_grad():
                 history_output = model(**history_inputs)
                 history_embedding = history_output.pooler_output
 
             # Embed candidates
-            candidate_inputs = tokenizer(candidate_jobs, padding=True, truncation=True, return_tensors="pt")
+            candidate_inputs = tokenizer(
+                candidate_jobs,
+                padding=True,
+                truncation=True,
+                return_tensors="pt"
+            )
+
             with torch.no_grad():
                 candidate_output = model(**candidate_inputs)
                 candidate_embeddings = candidate_output.pooler_output
 
             # Cosine similarity
-            similarities = F.cosine_similarity(history_embedding, candidate_embeddings)
+            similarities = F.cosine_similarity(
+                history_embedding,
+                candidate_embeddings
+            )
+
             top_scores, top_indices = similarities.topk(3)
 
             st.write("🔮 **Top Recommended Career Paths:**")
+
             for i in top_indices:
-                st.write(f"• {candidate_jobs[i]} (Score: {similarities[i]:.2f})")
+                st.write(
+                    f"• {candidate_jobs[i]} "
+                    f"(Score: {similarities[i]:.2f})"
+                )
 
     except Exception as e:
         st.error(f"Error generating career suggestion: {e}")
-
 
 # st.markdown("---")
 # st.markdown("📣 We'd love your feedback to improve this tool!")
