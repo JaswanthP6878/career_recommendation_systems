@@ -14,100 +14,6 @@ for key in ["skills", "interests"]:
     if f"selected_{key}" not in st.session_state:
         st.session_state[f"selected_{key}"] = []
 
-#st.set_page_config(page_title="Career Recommender", layout="centered")
-
-
-# Convert local image to base64
-def get_base64_logo(path):
-    if not os.path.exists(path):
-        current_dir = os.path.dirname(os.path.realpath(__file__))
-        if os.path.exists(os.path.join("Logo", path)):
-            path = os.path.join("Logo", path)
-        elif os.path.exists(os.path.join(current_dir, path)):
-            path = os.path.join(current_dir, path)
-        elif os.path.exists(os.path.join(current_dir,"Logo", path)):
-            path = os.path.join(current_dir,"Logo", path)
-    print(path)
-    with open(path, "rb") as image_file:
-        # if path.endswith('svg'):
-        #     return base64.b64encode(path.encode('utf-8')).decode("utf-8")
-        return base64.b64encode(image_file.read()).decode()
-
-logo_base64 = get_base64_logo("young_aspiring_thinkers_logo.png")
-#logo_base64 = get_base64_logo("yat_logo_white.svg")
-
-# Inject fixed-position clickable logo in top-left corner
-# Inject fixed-position clickable logo (lower + larger)
-st.markdown(f"""
-    <style>
-    .fixed-logo {{
-        position: fixed;
-        top: 60px;      /* Moved lower for full visibility */
-        left: 40px;     /* Small buffer from edge */
-        z-index: 1000;
-    }}
-    </style>
-
-    <div class="fixed-logo">
-        <a href="https://youngaspiringthinkers.org" target="_blank">
-            <img src="data:image/png;base64,{logo_base64}" width="180">
-        </a>
-    </div>
-""", unsafe_allow_html=True)
-
-
-
-# Add top and left padding to the main app content to avoid logo overlap
-# Add padding to avoid overlap with fixed logo
-st.markdown("""
-    <style>
-    section.main > div:first-child {
-        padding-top: 90px;
-        padding-left: 20px;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
-
-
-st.markdown("""
-    <style>
-    /* === Input border override === */
-    div[data-baseweb="select"] > div {
-        border: 1px solid #4CAF50 !important;
-        box-shadow: none !important;
-    }
-
-    div[data-baseweb="select"]:focus-within > div {
-        border: 2px solid #388E3C !important;
-    }
-
-    .stMultiSelect [data-baseweb="tag"] {
-        background-color: #C8E6C9 !important;
-        color: black !important;
-    }
-
-    /* === Button style (normal + hover + active) === */
-    .stButton > button {
-        background-color: #4CAF50 !important;
-        color: white !important;
-        border: none !important;
-        border-radius: 6px;
-    }
-
-    .stButton > button:hover {
-        background-color: #45a049 !important;
-        color: white !important;
-    }
-
-    .stButton > button:active {
-        background-color: #388E3C !important;
-        color: white !important;
-        border: none !important;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
 
 # # === Centered logo and header block ===
 # col1, col2, col3 = st.columns([1, 2, 1])
@@ -129,10 +35,11 @@ interests = st.multiselect(
     default=st.session_state["selected_interests"] # Get Saved Interests from Session State
 )
 
-st.write("Don’t know your interests yet? Take the assessment:")
+if st.session_state["selected_interests"] == []:
+    st.write("Don’t know your interests yet? Take the assessment:")
 
-if st.button("🧠 Take Interest Assessment"):
-    st.switch_page("pages/Interest.py") 
+    if st.button("🧠 Take Interest Assessment"):
+        st.switch_page("Profile/Interest.py") 
 
 # -----------------------------------
 # Skill Options
@@ -161,15 +68,18 @@ skills = st.multiselect(
     default=st.session_state["selected_skills"] # Get Saved Skills from Session State
 )
 
+if st.session_state["selected_skills"] == []:
+    st.write("Don’t know your skills yet? Take the assessment:")
 
-st.write("Don’t know your skills yet? Take the assessment:")
+    if st.button("🧠 Take Skill Assessment"):
+        st.switch_page("Profile/Skill.py") 
 
-if st.button("🧠 Take Skill Assessment"):
-    st.switch_page("pages/Skill.py") 
+education_list = ["Grade 10", "Grade 11", "Grade 12", "Post-matric / University"]
 
 education = st.selectbox(
     "What is your current education level?",
-    ["Grade 10", "Grade 11", "Grade 12", "Post-matric / University"]
+    education_list,
+    index=education_list.index(st.session_state["education"])
 )
 
 submit = st.button("Find My Career Path")
@@ -273,29 +183,9 @@ if submit:
                     f"• {candidate_jobs[i]} "
                     f"(Score: {similarities[i]:.2f})"
                 )
+            
+            # if st.button("Start Talking to the Advisor"):
+            #     st.switch_page("Tools/Chatbot.py")
 
     except Exception as e:
         st.error(f"Error generating career suggestion: {e}")
-
-# st.markdown("---")
-# st.markdown("📣 We'd love your feedback to improve this tool!")
-
-# st.markdown(
-#     "[Fill out our quick feedback form](https://forms.gle/pGLd1D5WeZcvE8GS7)",
-#     unsafe_allow_html=True
-# )
-# === Show feedback prompt after recommendations ===
-st.markdown("---")
-
-st.markdown(
-    """
-    <div style="padding: 1rem; background-color: #f0f8ff; border-left: 4px solid #4CAF50; border-radius: 8px; font-size: 0.95rem;">
-        <h4 style="margin-top: 0; font-size: 1rem;">📣 We'd love your feedback!</h4>
-        <p style="margin-bottom: 0.5rem;">Help us improve the tool by sharing your thoughts.</p>
-        <a href="https://forms.gle/6ikb3Ubmy31CbNyS8" target="_blank" style="color: #1a73e8; font-weight: bold;">
-            Fill out our quick feedback form
-        </a>
-    </div>
-    """,
-    unsafe_allow_html=True
-)

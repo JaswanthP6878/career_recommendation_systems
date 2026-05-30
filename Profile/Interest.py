@@ -50,5 +50,5 @@ run_assessment(
     questions=questions,
     category_mapping=career_mapping,
     session_key="interests",
-    return_page="Profile/Recommender.py"
+    return_page="Tools/Recommender.py"
 )

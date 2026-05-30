@@ -80,7 +80,6 @@ def run_assessment(title, questions, category_mapping, session_key, return_page=
         top_5 = st.session_state[top5_key]
 
         for i, (category, score) in enumerate(top_5, start=1):
-
             st.success(f"{i}. {category} — {score}% Match")
 
         # -----------------------------------
@@ -88,7 +87,6 @@ def run_assessment(title, questions, category_mapping, session_key, return_page=
         # -----------------------------------
 
         if st.button("⬅ Return"):
-
             st.switch_page(return_page)
 
         return
