@@ -27,11 +27,14 @@ Name:{st.session_state["name"]}
 Gender:{st.session_state["gender"]}
 Age:{st.session_state["age"]}
 Education:{st.session_state["education"]}
+Languages:{st.session_state["languages"]}
 Location:{st.session_state["location"]}
 
 they're interested in {st.session_state["selected_interests"] if "selected_interests" in st.session_state else None}
 
 they have following skills: {st.session_state["selected_skills"] if "selected_skills" in st.session_state else None}
+
+they might be good fit for {st.session_state["recommending_jobs"] if "recommending_jobs" in st.session_state else None}
 
 They may need help to understands 
 - all possible career option. 

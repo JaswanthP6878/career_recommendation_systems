@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kenya Education & Career Research Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #006600;
+    --red: #bb0000;
+    --black: #111;
+    --cream: #faf8f3;
+    --warm-white: #fff9f0;
+    --border: #d4c9b0;
+    --muted: #6b6355;
+    --accent: #c8a84b;
+    --section-bg: #f4f0e6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--black);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* Header */
+  header {
+    background: var(--green);
+    color: white;
+    padding: 48px 40px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 40%;
+    background: linear-gradient(135deg, var(--red) 0%, transparent 60%);
+    opacity: 0.25;
+  }
+  .flag-stripe {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(to right, #006600 33%, #bb0000 33%, #bb0000 66%, #000 66%);
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.6rem;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+  header p {
+    font-size: 0.95rem;
+    opacity: 0.85;
+    font-weight: 300;
+    max-width: 600px;
+  }
+  .badge {
+    display: inline-block;
+    background: var(--accent);
+    color: #222;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+
+  /* Nav */
+  nav {
+    background: var(--black);
+    padding: 0 40px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+  }
+  nav a {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 14px 18px;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  nav a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* Main layout */
+  main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 48px 32px;
+  }
+
+  /* Sections */
+  section {
+    margin-bottom: 64px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--border);
+  }
+  .section-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--border);
+    line-height: 1;
+  }
+  .section-title h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.55rem;
+    font-weight: 700;
+    color: var(--black);
+  }
+  .section-title p {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  /* Cards grid */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 16px;
+  }
+  .card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px;
+    position: relative;
+    transition: box-shadow 0.2s;
+  }
+  .card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+  .card-icon {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  .card h3 {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+    color: var(--black);
+  }
+  .card p {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .card .tag {
+    display: inline-block;
+    background: var(--section-bg);
+    color: var(--muted);
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-top: 10px;
+    margin-right: 4px;
+  }
+  .card .tag.green { background: #e6f0e6; color: var(--green); }
+  .card .tag.red { background: #fce8e8; color: var(--red); }
+  .card .tag.gold { background: #fdf4df; color: #9a6d00; }
+
+  /* Table */
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    font-size: 0.83rem;
+  }
+  thead { background: var(--black); color: white; }
+  thead th {
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--section-bg); }
+  tbody td { padding: 11px 16px; vertical-align: top; }
+  td a { color: var(--green); text-decoration: none; font-weight: 500; }
+  td a:hover { text-decoration: underline; }
+
+  /* Vocab */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 12px;
+  }
+  .vocab-item {
+    background: white;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--green);
+    border-radius: 0 6px 6px 0;
+    padding: 14px 18px;
+  }
+  .vocab-item.red-accent { border-left-color: var(--red); }
+  .vocab-item.gold-accent { border-left-color: var(--accent); }
+  .vocab-item dt {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--black);
+    margin-bottom: 4px;
+  }
+  .vocab-item dd {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+  .vocab-item .abbr {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--green);
+    text-transform: uppercase;
+    background: #e6f0e6;
+    padding: 1px 7px;
+    border-radius: 3px;
+    display: inline-block;
+    margin-bottom: 5px;
+  }
+  .vocab-item.red-accent .abbr { color: var(--red); background: #fce8e8; }
+  .vocab-item.gold-accent .abbr { color: #9a6d00; background: #fdf4df; }
+
+  /* Info box */
+  .info-box {
+    background: #e6f0e6;
+    border: 1px solid #b3d1b3;
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-bottom: 20px;
+    font-size: 0.85rem;
+    color: #1a401a;
+  }
+  .info-box strong { display: block; margin-bottom: 4px; font-size: 0.88rem; }
+  .warn-box {
+    background: #fdf4df;
+    border: 1px solid #e8d08a;
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-bottom: 20px;
+    font-size: 0.85rem;
+    color: #5a4200;
+  }
+
+  /* Source links */
+  .source-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.75rem;
+    color: var(--green);
+    text-decoration: none;
+    background: #e6f0e6;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+    transition: background 0.15s;
+    margin: 3px 2px;
+  }
+  .source-link:hover { background: #d0e6d0; text-decoration: underline; }
+
+  /* Pathway diagram */
+  .pathway {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    overflow-x: auto;
+    padding: 4px 0 16px;
+    margin-bottom: 10px;
+  }
+  .pathway-step {
+    flex: 1;
+    min-width: 130px;
+    background: white;
+    border: 1px solid var(--border);
+    padding: 14px 14px;
+    font-size: 0.78rem;
+    position: relative;
+    text-align: center;
+  }
+  .pathway-step:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    color: var(--muted);
+    z-index: 1;
+    background: var(--cream);
+    padding: 0 2px;
+  }
+  .pathway-step .step-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .pathway-step .step-name {
+    font-weight: 700;
+    font-size: 0.85rem;
+    margin-bottom: 3px;
+  }
+  .pathway-step .step-years {
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+  .pathway-step.green-step { border-top: 3px solid var(--green); }
+  .pathway-step.red-step { border-top: 3px solid var(--red); }
+  .pathway-step.gold-step { border-top: 3px solid var(--accent); }
+
+  /* Footer */
+  footer {
+    background: var(--black);
+    color: #888;
+    font-size: 0.75rem;
+    padding: 24px 40px;
+    text-align: center;
+  }
+  footer a { color: #aaa; }
+
+  @media (max-width: 640px) {
+    header { padding: 32px 20px 28px; }
+    header h1 { font-size: 1.8rem; }
+    main { padding: 32px 16px; }
+    nav { padding: 0 16px; }
+    .section-num { font-size: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge">Research Brief · Kenya Context</div>
+  <h1>Kenya Education &amp;<br>Career Landscape</h1>
+  <p>A validated research reference covering jobs in demand, skills gaps, universities, and education pathway vocabulary — with hyperlinks to primary sources.</p>
+  <div class="flag-stripe"></div>
+</header>
+
+<nav>
+  <a href="#jobs">Jobs in Demand</a>
+  <a href="#skills">Skills in Demand</a>
+  <a href="#universities">Universities</a>
+  <a href="#tvet">TVETs &amp; Colleges</a>
+  <a href="#vocab">Key Vocabulary</a>
+  <a href="#pathways">Education Pathways</a>
+</nav>
+
+<main>
+
+  <!-- SECTION 1: Jobs -->
+  <section id="jobs">
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <div class="section-title">
+        <h2>Jobs in Demand</h2>
+        <p>Sectors actively hiring in Kenya's formal and informal economy</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <strong>📊 Labour Market Context (2025)</strong>
+      Kenya created 882,100 new jobs in 2025 per the KNBS 2026 Economic Survey. The formal economy's largest wage employer is <strong>Education</strong> (731,300 jobs), followed by <strong>Manufacturing</strong> (388,564) and <strong>Public Administration</strong> (375,100). The informal sector still accounts for ~18.1 million workers — roughly 85% of all employment.
+      <br><br>
+      <a class="source-link" href="https://www.capitalfm.co.ke/business/2026/04/kenya-adds-882100-jobs-in-2025/" target="_blank">📎 Capital FM – KNBS 2026 Economic Survey</a>
+      <a class="source-link" href="https://jobsbureaukenya.co.ke/top-10-most-in-demand-jobs-in-kenya-2025-2026-edition/" target="_blank">📎 Jobs Bureau Kenya – Top 10 In-Demand Jobs</a>
+      <a class="source-link" href="https://www.pulse.co.ke/story/top-10-in-demand-jobs-in-kenya-for-2025-2025082813201009044" target="_blank">📎 Pulse Kenya – In-Demand Jobs 2025</a>
+    </div>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <div class="card-icon">💻</div>
+        <h3>Technology &amp; Software Development</h3>
+        <p>Software engineers, mobile app developers, cybersecurity specialists, and IT support staff are highly sought across fintech, health tech, e-commerce, and government digitisation projects.</p>
+        <span class="tag green">Highest growth</span>
+        <span class="tag">Formal sector</span>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🏥</div>
+        <h3>Healthcare &amp; Clinical Services</h3>
+        <p>Doctors, nurses, clinical officers, lab technicians, and pharmacists are continually in demand, driven by population growth and county health programme expansion.</p>
+        <span class="tag green">Always in demand</span>
+        <span class="tag">Public &amp; private</span>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">📊</div>
+        <h3>Finance, Accounting &amp; Fintech</h3>
+        <p>Accountants, financial analysts, and risk managers are needed as Kenya's fintech sector booms and regulatory compliance tightens. CPA and ACCA credentials strongly preferred.</p>
+        <span class="tag gold">High salary</span>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🎓</div>
+        <h3>Education &amp; Teaching</h3>
+        <p>Kenya's single largest formal wage sector with 731,300 jobs. TSC (Teachers Service Commission) regularly posts vacancies; demand is high at all levels, including TVET trainers.</p>
+        <span class="tag green">Largest sector</span>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🏗️</div>
+        <h3>Construction &amp; Engineering</h3>
+        <p>Infrastructure projects, affordable housing programmes, and the Vision 2030 agenda are sustaining strong demand for civil engineers, quantity surveyors, and construction managers.</p>
+        <span class="tag">Formal sector</span>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🌾</div>
+        <h3>Agriculture &amp; AgriTech</h3>
+        <p>Kenya's agricultural backbone is merging with digital tools. Agronomists, agricultural extension officers, and AgriTech specialists who combine farming knowledge with data are needed.</p>
+        <span class="tag">Mixed formal/informal</span>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🏨</div>
+        <h3>Hospitality &amp; Tourism</h3>
+        <p>As tourism grows, hotels and lodges are actively hiring trained hotel managers, chefs, and customer service staff. A reported shortage of qualified personnel makes this a strong opportunity.</p>
+        <span class="tag">Growing sector</span>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🔧</div>
+        <h3>Manufacturing &amp; Technical Trades</h3>
+        <p>Manufacturing grew by 5.2% in 2025. Welders, electricians, mechanics, and machine operators are in steady demand, particularly through TVET-trained artisans and craft certificate holders.</p>
+        <span class="tag">TVET pathway</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 2: Skills -->
+  <section id="skills">
+    <div class="section-header">
+      <div class="section-num">02</div>
+      <div class="section-title">
+        <h2>Skills in Demand</h2>
+        <p>Technical and cross-cutting skills that Kenyan employers are actively seeking</p>
+      </div>
+    </div>
+
+    <div class="warn-box">
+      ⚠️ Kenya's <strong>National AI Strategy 2025–2030</strong> (launched March 2025) and rapid digital expansion mean tech skills are shifting fast. The ICT sector has grown at ~10.8% annually since 2016.
+      <br>
+      <a class="source-link" href="https://www.edstellar.com/blog/skills-in-demand-in-kenya" target="_blank">📎 Edstellar – Top 8 In-Demand Skills 2026</a>
+      <a class="source-link" href="https://marshacreatives.co.ke/7-tech-skills-in-kenya-on-demand-in-2025/" target="_blank">📎 Marsha Creatives – 7 Tech Skills 2025</a>
+      <a class="source-link" href="https://ajiranext.com/resources/high-demand-skills-for-your-career-in-kenya-2026-future-proof-your-job" target="_blank">📎 Ajira Next – High-Demand Skills 2026</a>
+      <a class="source-link" href="https://www.colleges.co.ke/articles/most-in-demand-online-skills-for-kenyans-2025-sm1-12" target="_blank">📎 Colleges.co.ke – Online Skills 2025</a>
+    </div>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <div class="card-icon">🤖</div>
+        <h3>AI &amp; Machine Learning</h3>
+        <p>Kenya faces a UNESCO-documented shortage of AI professionals. The national AI Strategy 2025–2030 is creating demand across agriculture, health, finance, and education. 30% of employers cite the AI skills gap as a top challenge.</p>
+        <span class="tag red">Critical shortage</span>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🔐</div>
+        <h3>Cybersecurity</h3>
+        <p>Cyber attacks rose 25% and ransomware 68% in recent years. Kenya will need close to 10,000 cybersecurity experts by end-2026. Skills: ethical hacking, intrusion detection, risk management.</p>
+        <span class="tag red">Severe shortage</span>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">📈</div>
+        <h3>Data Analysis &amp; Data Science</h3>
+        <p>Every sector — from M-Pesa's fraud detection to crop monitoring — generates data. Tools in demand: Python, Power BI, Tableau, SQL, statistical modelling.</p>
+        <span class="tag gold">High salary potential</span>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">📱</div>
+        <h3>Mobile &amp; Software Development</h3>
+        <p>Companies urgently need developers who understand the local market — building apps for basic phones and low-bandwidth environments. Languages: Python, JavaScript, Java.</p>
+        <span class="tag green">High demand</span>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">☁️</div>
+        <h3>Cloud Computing &amp; DevOps</h3>
+        <p>Government e-services, digital banking, and health systems all depend on cloud infrastructure. Cloud certifications (AWS, Google, Azure) are increasingly required.</p>
+        <span class="tag">Growing need</span>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">📣</div>
+        <h3>Digital Marketing &amp; Content</h3>
+        <p>Brands, NGOs, and startups need professionals skilled in SEO, social media management, content creation, and analytics — a rapidly growing field with relatively lower barriers to entry.</p>
+        <span class="tag">Entry-accessible</span>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🌱</div>
+        <h3>AgriTech &amp; GIS Skills</h3>
+        <p>Combining agricultural knowledge with data tools: GIS/satellite data analysis, IoT sensors, climate modelling, and smallholder-friendly app design. Companies hiring: Twiga Foods, Farmcrowdy, ICPAC.</p>
+        <span class="tag">Niche but growing</span>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🗣️</div>
+        <h3>Soft Skills (Cross-cutting)</h3>
+        <p>Communication, teamwork, problem-solving, and adaptability are consistently cited as differentiators. The degree gets you in; soft skills get you ahead.</p>
+        <span class="tag green">Universal requirement</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 3: Universities -->
+  <section id="universities">
+    <div class="section-header">
+      <div class="section-num">03</div>
+      <div class="section-title">
+        <h2>Universities in Kenya</h2>
+        <p>Public and private institutions approved by the Commission for University Education (CUE)</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <strong>📋 Admission System — KUCCPS</strong>
+      University placement for government-sponsored students is centralised through the <strong>Kenya Universities and Colleges Central Placement Service (KUCCPS)</strong>. Students apply via the KUCCPS portal. The minimum entry grade is <strong>C+ (plus)</strong> in KCSE for degree programmes. As of 2026, there are <strong>42 public universities</strong> and over 40 private universities approved by CUE, totalling 83 institutions.
+      <br><br>
+      <a class="source-link" href="https://kuccps.net/degree-application-20252026-placement-cycle" target="_blank">📎 KUCCPS Official Portal – Degree Applications</a>
+      <a class="source-link" href="https://edupoa.com/blog/complete-list-of-kuccps-eligible-public-universities-in-kenya/" target="_blank">📎 EduPoa – Complete List of KUCCPS-Eligible Universities</a>
+      <a class="source-link" href="https://www.tuko.co.ke/education/615869-approved-universities-kenya-2026-full-list-public-private-institutions/" target="_blank">📎 Tuko – Approved Universities 2026</a>
+      <a class="source-link" href="https://www.cue.or.ke" target="_blank">📎 Commission for University Education (CUE) Official Site</a>
+    </div>
+
+    <h3 style="font-family:'Playfair Display',serif; font-size:1.1rem; margin-bottom:14px; color:var(--green);">Public Universities (Key Institutions)</h3>
+    <div class="table-wrap" style="margin-bottom:28px;">
+      <table>
+        <thead>
+          <tr>
+            <th>University</th>
+            <th>Location</th>
+            <th>Known For</th>
+            <th>Min. KCSE Entry</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="https://www.uonbi.ac.ke/" target="_blank">University of Nairobi (UoN)</a></td>
+            <td>Nairobi</td>
+            <td>Law, Medicine, Engineering, Architecture — Kenya's oldest &amp; highest-ranked (Elite status)</td>
+            <td>C+ (degree); varies by course</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.ku.ac.ke/" target="_blank">Kenyatta University (KU)</a></td>
+            <td>Nairobi (Kahawa)</td>
+            <td>Education, Sciences, Business, IT — one of the largest public universities; 80+ KUCCPS courses</td>
+            <td>C+</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.mu.ac.ke/" target="_blank">Moi University</a></td>
+            <td>Eldoret</td>
+            <td>Medicine, Engineering, Forestry — leading in Western Kenya</td>
+            <td>C+</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.jkuat.ac.ke/" target="_blank">Jomo Kenyatta University (JKUAT)</a></td>
+            <td>Juja, Nairobi</td>
+            <td>Engineering, Agriculture, Technology — STEM-focused</td>
+            <td>C+</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.egerton.ac.ke/" target="_blank">Egerton University</a></td>
+            <td>Nakuru</td>
+            <td>Agriculture, Environmental Science, Education</td>
+            <td>C+</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.maseno.ac.ke/" target="_blank">Maseno University</a></td>
+            <td>Kisumu</td>
+            <td>Education, Sciences, Health Sciences — Western Kenya focus</td>
+            <td>C+</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.dkut.ac.ke/" target="_blank">Dedan Kimathi University (DeKUT)</a></td>
+            <td>Nyeri</td>
+            <td>Engineering, ICT, Computing</td>
+            <td>C+</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.tuk.ac.ke/" target="_blank">Technical University of Kenya (TUK)</a></td>
+            <td>Nairobi</td>
+            <td>Engineering, Built Environment, Applied Sciences — formerly Kenya Polytechnic</td>
+            <td>C+</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.tumkenya.ac.ke/" target="_blank">Technical University of Mombasa (TUM)</a></td>
+            <td>Mombasa</td>
+            <td>Maritime, Engineering, Applied Sciences</td>
+            <td>C+</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.maasaimara.ac.ke/" target="_blank">Maasai Mara University</a></td>
+            <td>Narok</td>
+            <td>Tourism, Business, Sciences</td>
+            <td>C+</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-family:'Playfair Display',serif; font-size:1.1rem; margin-bottom:14px; color:var(--red);">Notable Private Universities</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>University</th>
+            <th>Location</th>
+            <th>Known For</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="https://www.strathmore.edu/" target="_blank">Strathmore University</a></td>
+            <td>Nairobi</td>
+            <td>Business, IT, Law — Kenya's highest-ranked private university; Africa ranking 113</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.usiu.ac.ke/" target="_blank">United States International University (USIU)</a></td>
+            <td>Nairobi</td>
+            <td>Business Administration, International Relations, Psychology</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.daystar.ac.ke/" target="_blank">Daystar University</a></td>
+            <td>Nairobi/Athi River</td>
+            <td>Communication, Media, Theology</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.aku.edu/kenya/" target="_blank">Aga Khan University (AKU)</a></td>
+            <td>Nairobi</td>
+            <td>Health Sciences, Nursing, Media &amp; Communications</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.mku.ac.ke/" target="_blank">Mount Kenya University (MKU)</a></td>
+            <td>Thika (+ branches)</td>
+            <td>Medicine, Business, Law, Education — large branch network nationally</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.cuea.edu/" target="_blank">Catholic University of East Africa (CUEA)</a></td>
+            <td>Nairobi</td>
+            <td>Philosophy, Theology, Social Sciences, Law</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.kabarak.ac.ke/" target="_blank">Kabarak University</a></td>
+            <td>Nakuru</td>
+            <td>Law, Business, Education, Science &amp; Technology</td>
+          </tr>
+          <tr>
+            <td><a href="https://zetech.ac.ke/" target="_blank">Zetech University</a></td>
+            <td>Nairobi/Ruiru</td>
+            <td>ICT, Business, Media — focused on skills-based programmes</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:0.78rem; color:var(--muted); margin-top:10px;">Source: <a href="https://nairobileo.co.ke/news/article/25219/govt-lists-public-and-private-universities-approved-to-operate-in-kenya" target="_blank" style="color:var(--green);">Nairobi Leo – CUE Approved Universities (Jan 2026)</a> | <a href="https://www.cue.or.ke/index.php?option=com_phocadownload&view=category&download=281:authorized-universities-mar-2026&id=81:approved-academic-programmes-dec-2023&Itemid=496" target="_blank" style="color:var(--green);">CUE Official List March 2026 (PDF)</a></p>
+  </section>
+
+  <!-- SECTION 4: TVETs -->
+  <section id="tvet">
+    <div class="section-header">
+      <div class="section-num">04</div>
+      <div class="section-title">
+        <h2>TVETs &amp; Colleges</h2>
+        <p>Technical &amp; Vocational Education and Training institutions — categories, types, and requirements</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <strong>🏛️ Overview</strong>
+      The Kenyan TVET sector is governed by the <strong>Technical and Vocational Education and Training Act No. 29 of 2013</strong> and regulated by <strong>TVETA</strong> (Technical and Vocational Education and Training Authority). There are approximately <strong>2,600 institutions</strong> (public and private) across Kenya. Funding for students can come from HELB (Higher Education Loans Board) for approved institutions.
+      <br><br>
+      <a class="source-link" href="https://www.education.go.ke/technical-vocational-education-and-trainingtvet-programmes" target="_blank">📎 Ministry of Education – TVET Programmes</a>
+      <a class="source-link" href="https://educationnewshub.co.ke/full-list-of-all-approved-technical-and-vocational-training-institutions-tvets-universities-polytechnics-in-kenya/" target="_blank">📎 Education News Hub – Full List of TVET Institutions</a>
+      <a class="source-link" href="https://eduradar.co.ke/2025/01/03/full-list-of-national-polytechnics-in-kenya-contacts-addresses-and-everything-you-need-to-know/" target="_blank">📎 EduRadar – National Polytechnics Guide</a>
+      <a class="source-link" href="https://www.helb.co.ke/wp-content/uploads/2023/07/APPROVED-TVET-INSTITUTIONS-FUNDED-BY-HELB-AS-AT-JULY-2023.pdf" target="_blank">📎 HELB – Approved TVET Institutions (PDF)</a>
+    </div>
+
+    <div class="table-wrap" style="margin-bottom:20px;">
+      <table>
+        <thead>
+          <tr>
+            <th>Institution Type</th>
+            <th>Abbreviation</th>
+            <th>Level/Qualifications</th>
+            <th>Example Institutions</th>
+            <th>Min. Entry Grade</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>National Polytechnic</strong></td>
+            <td>Poly / NP</td>
+            <td>Artisan → Craft → Diploma → Higher Diploma; can partner with universities for degrees</td>
+            <td>Kabete National Polytechnic, Kisumu National Polytechnic, Kitale National Polytechnic, Rift Valley National Polytechnic, Meru National Polytechnic</td>
+            <td>C (Plain) for Diploma; lower for Craft/Artisan</td>
+          </tr>
+          <tr>
+            <td><strong>Technical Training Institute</strong></td>
+            <td>TTI</td>
+            <td>Artisan Certificate → Craft Certificate → Diploma</td>
+            <td>Nairobi Technical Training Institute (NTTI), Rift Valley Technical Training Institute (RVTTI)</td>
+            <td>D+ to C (depending on course)</td>
+          </tr>
+          <tr>
+            <td><strong>Technical &amp; Vocational College</strong></td>
+            <td>TVC</td>
+            <td>Artisan → Craft → Diploma</td>
+            <td>Baringo Technical College, Belgut Technical and Vocational College</td>
+            <td>D+ to C</td>
+          </tr>
+          <tr>
+            <td><strong>Vocational Training Centre</strong></td>
+            <td>VTC</td>
+            <td>Short courses, Artisan Certificates — run by County Governments</td>
+            <td>Spread across all 47 counties; community-level trade training</td>
+            <td>No formal requirement (open access)</td>
+          </tr>
+          <tr>
+            <td><strong>Kenya School of TVET</strong></td>
+            <td>KSTVET</td>
+            <td>Trains TVET trainers; CPD for TVET institutions — not for direct student enrolment</td>
+            <td>Kenya School of TVET (formerly KTTC), Gigiri, Nairobi</td>
+            <td>Trainer-level (diploma/degree)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="info-box">
+      <strong>📌 Qualification Levels in TVET (Competency-Based Education and Training — CBET)</strong>
+      Kenya's TVET system uses the following qualification ladder:<br>
+      <strong>Artisan Certificate</strong> → <strong>Craft Certificate</strong> → <strong>Diploma</strong> → <strong>Higher National Diploma (HND)</strong> → (pathway to Degree via university articulation)
+    </div>
+  </section>
+
+  <!-- SECTION 5: Vocabulary -->
+  <section id="vocab">
+    <div class="section-header">
+      <div class="section-num">05</div>
+      <div class="section-title">
+        <h2>Key Vocabulary</h2>
+        <p>Terms, acronyms, and concepts used in Kenya's education system</p>
+      </div>
+    </div>
+
+    <div class="vocab-grid">
+
+      <dl class="vocab-item">
+        <div class="abbr">8-4-4</div>
+        <dt>8-4-4 System</dt>
+        <dd>Kenya's former curriculum structure: 8 years primary, 4 years secondary, 4 years university. Introduced 1985; now being replaced by CBC. KCPE and KCSE were its key exit exams.</dd>
+      </dl>
+
+      <dl class="vocab-item gold-accent">
+        <div class="abbr gold-accent">CBC</div>
+        <dt>Competency-Based Curriculum</dt>
+        <dd>Kenya's new curriculum (launched 2017), structured as 2-6-3-3-3: 2 pre-primary, 6 lower primary, 3 junior secondary, 3 senior secondary, 3 university. Replaces 8-4-4's exam-heavy approach with practical skills assessment.</dd>
+      </dl>
+
+      <dl class="vocab-item red-accent">
+        <div class="abbr red-accent">KCSE</div>
+        <dt>Kenya Certificate of Secondary Education</dt>
+        <dd>The national end-of-secondary exam under 8-4-4. Graded A to E on a 12-point scale. Minimum C+ required for university; C for TVET diploma; D+ for craft/artisan programmes. Administered by KNEC.</dd>
+      </dl>
+
+      <dl class="vocab-item red-accent">
+        <div class="abbr red-accent">KCPE</div>
+        <dt>Kenya Certificate of Primary Education</dt>
+        <dd>End-of-primary exam under 8-4-4, marked out of 500. The last sitting was November 2023 — now replaced in CBC by the KJSEA (Kenya Junior Secondary Education Assessment).</dd>
+      </dl>
+
+      <dl class="vocab-item gold-accent">
+        <div class="abbr gold-accent">KJSEA / JSA / SSA</div>
+        <dt>CBC Transition Assessments</dt>
+        <dd>Under CBC: Grade 6 Assessment → Junior School Assessment (JSA) at Grade 9 → Senior School Assessment (SSA) at Grade 12. These replace KCPE/KCSE as the primary gateway assessments.</dd>
+      </dl>
+
+      <dl class="vocab-item">
+        <div class="abbr">KUCCPS</div>
+        <dt>Kenya Universities &amp; Colleges Central Placement Service</dt>
+        <dd>The State Corporation that coordinates government-sponsored placement into universities and TVET institutions. All eligible KCSE candidates apply here. Application fee: KSh 1,500. <a href="https://kuccps.net" target="_blank" style="color:var(--green);">kuccps.net</a></dd>
+      </dl>
+
+      <dl class="vocab-item">
+        <div class="abbr">CUE</div>
+        <dt>Commission for University Education</dt>
+        <dd>The regulator that charters and approves universities in Kenya. Any institution not on the CUE list is illegal and its degrees are unrecognised. <a href="https://www.cue.or.ke" target="_blank" style="color:var(--green);">cue.or.ke</a></dd>
+      </dl>
+
+      <dl class="vocab-item red-accent">
+        <div class="abbr red-accent">TVET</div>
+        <dt>Technical &amp; Vocational Education and Training</dt>
+        <dd>The umbrella term for all non-university tertiary education focused on practical/trade skills. Includes National Polytechnics, TTIs, TVCs, and VTCs. Regulated by TVETA.</dd>
+      </dl>
+
+      <dl class="vocab-item red-accent">
+        <div class="abbr red-accent">TVETA</div>
+        <dt>Technical &amp; Vocational Education and Training Authority</dt>
+        <dd>The government body that registers, accredits, and inspects all TVET institutions. Unlike universities (under CUE), TVET institutions must be TVETA-approved. <a href="https://www.tveta.go.ke" target="_blank" style="color:var(--green);">tveta.go.ke</a></dd>
+      </dl>
+
+      <dl class="vocab-item gold-accent">
+        <div class="abbr gold-accent">CBET</div>
+        <dt>Competency-Based Education and Training</dt>
+        <dd>The TVET curriculum model used in Kenya (parallel to CBC for schools). Focuses on demonstrating measurable skills/competencies rather than time-based learning. NITA and KNEC assess competencies.</dd>
+      </dl>
+
+      <dl class="vocab-item">
+        <div class="abbr">HELB</div>
+        <dt>Higher Education Loans Board</dt>
+        <dd>Government body that provides student loans and bursaries for both university and TVET students at approved institutions. Students can apply for up to KSh 60,000–80,000 per year. <a href="https://www.helb.co.ke" target="_blank" style="color:var(--green);">helb.co.ke</a></dd>
+      </dl>
+
+      <dl class="vocab-item">
+        <div class="abbr">KNEC</div>
+        <dt>Kenya National Examinations Council</dt>
+        <dd>The body that designs, administers, and certifies all national examinations — KCSE, KCPE (historical), CBC assessments, and TVET examinations. <a href="https://www.knec.ac.ke" target="_blank" style="color:var(--green);">knec.ac.ke</a></dd>
+      </dl>
+
+      <dl class="vocab-item gold-accent">
+        <div class="abbr gold-accent">TSC</div>
+        <dt>Teachers Service Commission</dt>
+        <dd>The national employer of all public school teachers in Kenya. TSC registers teachers, handles deployment, and posts vacancies. All public teachers must be TSC-registered. <a href="https://www.tsc.go.ke" target="_blank" style="color:var(--green);">tsc.go.ke</a></dd>
+      </dl>
+
+      <dl class="vocab-item">
+        <div class="abbr">Cluster Points</div>
+        <dt>KUCCPS Cluster Points / Cut-off Points</dt>
+        <dd>Each university course has a cluster of relevant KCSE subjects. A weighted score (cluster points) is calculated per applicant — this, not just the mean grade, determines placement. E.g., Engineering clusters weight Math and Sciences heavily.</dd>
+      </dl>
+
+      <dl class="vocab-item red-accent">
+        <div class="abbr red-accent">Harambee School</div>
+        <dt>Harambee / Community Schools</dt>
+        <dd>Community-funded secondary schools introduced in the 1990s when the government could not build enough public schools. Less selective than national/provincial schools; less fully government-funded.</dd>
+      </dl>
+
+      <dl class="vocab-item gold-accent">
+        <div class="abbr gold-accent">National / Extra-County / Sub-County</div>
+        <dt>Secondary School Classifications</dt>
+        <dd>Kenya's secondary schools are ranked: <strong>National schools</strong> (top performers from KCPE, e.g. Alliance, Starehe), <strong>Extra-County schools</strong> (provincial/county-wide intake), <strong>Sub-County/Day schools</strong> (local intake). KCPE scores determine which tier a student accesses.</dd>
+      </dl>
+
+    </div>
+  </section>
+
+  <!-- SECTION 6: Pathways -->
+  <section id="pathways">
+    <div class="section-header">
+      <div class="section-num">06</div>
+      <div class="section-title">
+        <h2>Education Pathways</h2>
+        <p>How KCSE grades determine post-secondary routes under the current 8-4-4 system</p>
+      </div>
+    </div>
+
+    <div class="warn-box">
+      ⚡ Kenya is mid-transition: the 8-4-4 system (with KCSE) still governs current secondary school leavers. The CBC system's first Grade 12 cohort will sit the SSA (Senior School Assessment) in 2027, after which TVET and university entry criteria may shift significantly.
+      <br>
+      <a class="source-link" href="https://eduguide.co.ke/cbc-curriculum-in-kenya/" target="_blank">📎 EduGuide – Full CBC Guide 2026</a>
+      <a class="source-link" href="https://openeducat.org/gradebook/kenya/school/" target="_blank">📎 OpenEduCat – Kenya Grading System Explained</a>
+    </div>
+
+    <h3 style="font-family:'Playfair Display',serif; font-size:1rem; margin-bottom:12px; color:var(--muted); text-transform:uppercase; letter-spacing:1px;">8-4-4 KCSE Grade → Pathway</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>KCSE Grade</th>
+            <th>Pathway Options</th>
+            <th>Institutions</th>
+            <th>Qualification Earned</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>A / A-</strong></td>
+            <td>Top public/private universities; competitive programmes (Medicine, Law, Engineering)</td>
+            <td>UoN, JKUAT, KU, Strathmore, USIU</td>
+            <td>Bachelor's Degree (3–5 years)</td>
+          </tr>
+          <tr>
+            <td><strong>B+ / B / B-</strong></td>
+            <td>Most university programmes via KUCCPS; private universities (self-sponsored)</td>
+            <td>Most public &amp; private universities</td>
+            <td>Bachelor's Degree</td>
+          </tr>
+          <tr>
+            <td><strong>C+ (minimum)</strong></td>
+            <td>University (government-sponsored via KUCCPS) — this is the minimum cut-off</td>
+            <td>All KUCCPS-listed universities</td>
+            <td>Bachelor's Degree</td>
+          </tr>
+          <tr>
+            <td><strong>C (Plain)</strong></td>
+            <td>TVET Diploma programmes at National Polytechnics &amp; TTIs; Diploma Teacher Training Colleges (TTCs)</td>
+            <td>National Polytechnics, Baringo Technical, Sigalagala National Poly</td>
+            <td>Diploma (2–3 years)</td>
+          </tr>
+          <tr>
+            <td><strong>D+ / D</strong></td>
+            <td>Craft Certificate at TVCs and TTIs; some short TVET programmes</td>
+            <td>TVCs, TTIs across counties</td>
+            <td>Craft Certificate (1–2 years)</td>
+          </tr>
+          <tr>
+            <td><strong>D- / E or no KCSE</strong></td>
+            <td>Artisan Certificate programmes; VTCs (county-run); community vocational training</td>
+            <td>Vocational Training Centres (VTCs), village polytechnics</td>
+            <td>Artisan Certificate (6–12 months)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p style="font-size:0.78rem; color:var(--muted); margin-top:10px;">Sources: <a href="https://openeducat.org/gradebook/kenya/school/" target="_blank" style="color:var(--green);">OpenEduCat – Kenya Grades</a> | <a href="https://ethz.ch/content/dam/ethz/special-interest/mtec/edusys-dam/documents/CES%20Factbook%20Education%20Systems%20Kenya.pdf" target="_blank" style="color:var(--green);">ETH Zurich – Kenya Education System Factbook</a></p>
+
+    <div style="margin-top: 28px;">
+      <h3 style="font-family:'Playfair Display',serif; font-size:1rem; margin-bottom:12px; color:var(--muted); text-transform:uppercase; letter-spacing:1px;">CBC Future Pathway (from 2027)</h3>
+      <div class="pathway">
+        <div class="pathway-step green-step">
+          <div class="step-label">Pre-Primary</div>
+          <div class="step-name">PP1 &amp; PP2</div>
+          <div class="step-years">2 years</div>
+        </div>
+        <div class="pathway-step green-step">
+          <div class="step-label">Lower Primary</div>
+          <div class="step-name">Grades 1–6</div>
+          <div class="step-years">6 years → Grade 6 Assessment</div>
+        </div>
+        <div class="pathway-step green-step">
+          <div class="step-label">Junior Secondary</div>
+          <div class="step-name">Grades 7–9</div>
+          <div class="step-years">3 years → JSA</div>
+        </div>
+        <div class="pathway-step gold-step">
+          <div class="step-label">Senior Secondary</div>
+          <div class="step-name">Grades 10–12</div>
+          <div class="step-years">3 years → SSA (replaces KCSE)</div>
+        </div>
+        <div class="pathway-step red-step">
+          <div class="step-label">Tertiary</div>
+          <div class="step-name">University / TVET</div>
+          <div class="step-years">3–5 years</div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+<footer>
+  <p>Compiled May 2026 · Sources are hyperlinked throughout for direct validation · All links point to publicly accessible primary or credible secondary sources.</p>
+  <p style="margin-top:6px;">Key sources: <a href="https://kuccps.net" target="_blank">KUCCPS</a> · <a href="https://www.cue.or.ke" target="_blank">CUE</a> · <a href="https://www.tveta.go.ke" target="_blank">TVETA</a> · <a href="https://www.helb.co.ke" target="_blank">HELB</a> · <a href="https://www.knec.ac.ke" target="_blank">KNEC</a> · <a href="https://www.education.go.ke" target="_blank">Ministry of Education</a></p>
+</footer>
+
+</body>
+</html>

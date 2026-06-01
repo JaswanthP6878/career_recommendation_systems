@@ -5,12 +5,28 @@ A personalized, AI-powered career recommendation tool developed using OpenAI and
 <!-- ![App Screenshot](https://your-screenshot-url-if-hosted.com) Optional: Add a screenshot link -->
 
 ---
-
 <!-- ## 🚀 Live Demo -->
-
 <!-- 👉 [Try the App](https://your-streamlit-app-url.streamlit.app) -->
+---
+
+## Live Demo
+https://yat-demo.streamlit.app/
+
 
 ---
+
+## Tech Stack
+
+- [Streamlit](https://streamlit.io) — frontend UI
+- [OpenAI API](https://platform.openai.com) — for starting role generation
+- [Gemini API](https://ai.google.dev/gemini-api/docs) — for starting role generation
+- [Hugging Face Transformers](https://huggingface.co) — for semantic similarity (`mpnet-karrierewege`)
+- [PyTorch](https://pytorch.org) — model inference
+- [scikit-learn](https://scikit-learn.org) — similarity computations
+
+---
+
+### The Matches page / Recommender.py 
 
 ## How It Works
 
@@ -35,15 +51,4 @@ A personalized, AI-powered career recommendation tool developed using OpenAI and
   - Marketing Specialist
   - Product Manager
 
----
-
-## Tech Stack
-
-- [Streamlit](https://streamlit.io) — frontend UI
-- [OpenAI API](https://platform.openai.com) — for starting role generation
-- [Hugging Face Transformers](https://huggingface.co) — for semantic similarity (`mpnet-karrierewege`)
-- [PyTorch](https://pytorch.org) — model inference
-- [scikit-learn](https://scikit-learn.org) — similarity computations
-
----
 

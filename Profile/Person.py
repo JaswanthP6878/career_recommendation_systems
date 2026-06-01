@@ -9,6 +9,13 @@ african_locations = [
 
 educations_list = ["Grade 10", "Grade 11", "Grade 12", "Post-matric / University"]
 
+languages_list = [
+    "English", "Swahili (Kiswahili)", "Arabic", "French", "Hausa",
+    "Yoruba", "Amharic", "Igbo", "Oromo", "Portuguese", "Zulu (isiZulu)",
+    "Xhosa (isiXhosa)", "Shona", "Somali", "Fulani (Fula)", "Berber (Tamazight)",
+    "Malagasy", "Chichewa (Nyanja)", "Afrikaans", "Lingala"
+    ]
+
 st.title("👤 My Info")
 
 # -----------------------------------
@@ -20,6 +27,7 @@ defaults = {
     "gender": "Male",
     "age": 16,
     "education": "Grade 10",
+    "languages": ["English", "Swahili (Kiswahili)"],
     "location": "Kenya",
     "edit_profile": False
 }
@@ -41,6 +49,7 @@ if not st.session_state.edit_profile:
         st.write(f"**Gender:** {st.session_state.gender}")
         st.write(f"**Age:** {st.session_state.age}")
         st.write(f"**Education:** {st.session_state.education}")
+        st.write(f"**Languages:** {', '.join(st.session_state.languages)}")
         st.write(f"**Location:** {st.session_state.location}")
 
     if st.button("✏️ Update Profile"):
@@ -85,6 +94,11 @@ else:
             educations_list,
             index = educations_list.index(st.session_state.education)
         )
+
+        language = st.multiselect(
+            "Languages", languages_list,
+            default=st.session_state["languages"] # Get Saved Skills from Session State
+            )
 
         location = st.selectbox(
             "Location",
