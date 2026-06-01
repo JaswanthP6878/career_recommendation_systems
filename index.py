@@ -14,6 +14,7 @@ defaults = {
     "gender": "Male",
     "age": 16,
     "education": "Grade 10",
+    "languages": ["English", "Swahili (Kiswahili)"],
     "location": "Kenya",
 }
 
