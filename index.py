@@ -48,7 +48,7 @@ Person = st.Page("Profile/Person.py", title="My Info", icon=":material/person:",
 Interest = st.Page("Profile/Interest.py", title="Interest", icon=":material/favorite:")
 Skill = st.Page("Profile/Skill.py", title="Skills", icon=":material/favorite:")
 
-Recommender = st.Page("Tools/Recommender.py", title="Matches", icon=":material/compare_arrows:")
+Recommender = st.Page("Tools/Recommender.py", title="Recommendations", icon=":material/compare_arrows:")
 Chatbot = st.Page("Tools/Chatbot.py", title="Live Advisor", icon=":material/smart_toy:")
 
 if st.session_state.logged_in:
