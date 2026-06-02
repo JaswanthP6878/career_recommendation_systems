@@ -20,38 +20,14 @@ def sidebar_settings():
         )
         st.session_state.font_size = font_options[selected]
 
-        st.session_state.high_contrast = st.toggle(
-            "High Contrast",
-            value=st.session_state.get("high_contrast", False)
-        )
-        st.session_state.reduce_motion = st.toggle(
-            "Reduce Motion",
-            value=st.session_state.get("reduce_motion", False)
-        )
-
 
 def apply_styles():
     font_size = st.session_state.get("font_size", 18)
-    high_contrast = st.session_state.get("high_contrast", False)
-    reduce_motion = st.session_state.get("reduce_motion", False)
 
     st.markdown(
         '<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">',
         unsafe_allow_html=True
     )
-
-    contrast_css = """
-        html, body, [class*="css"] { background-color: #000000 !important; color: #ffffff !important; }
-        .stButton > button { border: 2px solid #ffffff !important; }
-        [data-testid="stSidebar"] { background-color: #000000 !important; }
-    """ if high_contrast else ""
-
-    motion_css = """
-        *, *::before, *::after {
-            animation-duration: 0.001ms !important;
-            transition-duration: 0.001ms !important;
-        }
-    """ if reduce_motion else ""
 
     st.markdown(
         f"""
@@ -94,8 +70,6 @@ def apply_styles():
         [data-testid="stRadio"] [role="radiogroup"] > label > div:first-child {{
             display: none;
         }}
-        {contrast_css}
-        {motion_css}
         </style>
         """,
         unsafe_allow_html=True
