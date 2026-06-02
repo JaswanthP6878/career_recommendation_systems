@@ -340,7 +340,7 @@ else:
             except json.JSONDecodeError as je:
                 st.error("Could not parse the AI output into a clean table structure.")
                 with st.expander("See Raw Output"):
-                    st.code(response.text)
+                    st.code(je.text)
                     st.caption(f"Error details: {str(je)}")
             except Exception as e:
                 st.error(f"An unexpected error occurred: {str(e)}")
