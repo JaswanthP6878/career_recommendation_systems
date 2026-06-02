@@ -9,8 +9,9 @@ from transformers import AutoModel, AutoTokenizer
 from PIL import Image
 #import base64
 from bs4 import BeautifulSoup
+import pandas as pd
 
-UseOpenAi = False
+UseOpenAi = True
 for key in ["skills", "interests"]:
     if f"selected_{key}" not in st.session_state:
         st.session_state[f"selected_{key}"] = []
