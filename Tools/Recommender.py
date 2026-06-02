@@ -310,7 +310,7 @@ else:
                     df_merged = pd.merge(df_gaps, df_skills, left_on="gap", right_on="skill").drop(columns=["skill"])
                     df_merged.columns = ["Skill Category", "Current Gap Description", "Action Plan / What to Study"]
                     
-                    st.dataframe(df_merged, use_container_width=True, hide_index=True)
+                    st.dataframe(df_merged, width="stretch", hide_index=True)
                 else:
                     st.info("No major skill gaps identified.")
 
@@ -322,7 +322,7 @@ else:
                     df_inst = pd.DataFrame(data["recommended_institutions"])
                     df_inst.columns = ["Institution / Provider", "Type", "Strategic Relevance"]
                     
-                    st.dataframe(df_inst, use_container_width=True, hide_index=True)
+                    st.dataframe(df_inst, width="stretch", hide_index=True)
                 else:
                     st.info("No specific institutions recommended.")
 

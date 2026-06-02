@@ -33,15 +33,15 @@ def run_assessment(title, questions, category_mapping, session_key, return_page=
     st.title(title)
 
     # -----------------------------------
-    # Response Scale
+    # Response Scale — emoji labels from mockup design
     # -----------------------------------
 
     response_scale = {
-        "Strongly Agree": 5,
-        "Agree": 4,
-        "Neutral": 3,
-        "Disagree": 2,
-        "Strongly Disagree": 1
+        "😄 Strongly Agree": 5,
+        "🙂 Agree": 4,
+        "😐 Neutral": 3,
+        "🙁 Disagree": 2,
+        "😖 Strongly Disagree": 1,
     }
 
     # -----------------------------------
@@ -74,17 +74,14 @@ def run_assessment(title, questions, category_mapping, session_key, return_page=
     if st.session_state[completed_key]:
 
         st.success("✅ Assessment Complete!")
-
         st.subheader("🏆 Your Top 5 Results")
 
-        top_5 = st.session_state[top5_key]
-
-        for i, (category, score) in enumerate(top_5, start=1):
-            st.success(f"{i}. {category} — {score}% Match")
-
-        # -----------------------------------
-        # Return Button
-        # -----------------------------------
+        for i, (category, score) in enumerate(st.session_state[top5_key], start=1):
+            with st.container(border=True):
+                col_name, col_score = st.columns([3, 1])
+                col_name.markdown(f"**{i}. {category}**")
+                col_score.markdown(f"**{score}%**")
+                st.progress(score / 100)
 
         if st.button("⬅ Return"):
             st.switch_page(return_page)
@@ -105,27 +102,21 @@ def run_assessment(title, questions, category_mapping, session_key, return_page=
     progress = q_num / len(questions)
 
     st.progress(progress)
+    st.caption(f"Question {q_num} of {len(questions)}")
 
-    st.write(f"### Question {q_num} of {len(questions)}")
+    st.markdown(f"### {q_text}")
 
-    # -----------------------------------
-    # Existing Answer
-    # -----------------------------------
     existing_answer = st.session_state[responses_key].get(q_num)
 
-    # -----------------------------------
-    # Radio Input
-    # -----------------------------------
-
     current_response = st.radio(
-        q_text,
+        "Response",
         options=list(response_scale.keys()),
-        horizontal=True,
         index=(
             list(response_scale.keys()).index(existing_answer)
             if existing_answer else None
         ),
-        key=f"{session_key}_question_{q_num}"
+        key=f"{session_key}_question_{q_num}",
+        label_visibility="collapsed",
     )
 
     # -----------------------------------
