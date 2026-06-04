@@ -213,8 +213,7 @@ if showForm:
     # === Inputs ===
     interests = st.multiselect(
         "What are your interests?",
-        ["Entrepreneurship", "Information Technology (IT)", "Business", "Healthcare", "Engineering", "Media", "Agriculture", "Finance", "AI", 
-        "Design", "Education", "Audit & Tax", "Mining", "Transportation & Logistics"], 
+        ["Entrepreneurship", "Information Technology (IT)", "Business", "Healthcare", "Engineering", "Media", "Finance", "AI", "Design", "Education"],
         default=st.session_state["selected_interests"] # Get Saved Interests from Session State
     )
 
@@ -229,16 +228,10 @@ if showForm:
     # -----------------------------------
 
     skill_options = [
-        # WEF 2025 Core Skills
-        "Analytical Thinking", "Resilience, Flexibility & Agility", "Leadership & Social Influence",
-        "Creative Thinking", "Motivation & Self-awareness", "Technological Literacy",
-        "Empathy & Active Listening", "Curiosity & Lifelong Learning", "Talent Management",
-        "Service Orientation & Customer Service",
-
-        # Technical/Domain-Specific Skills
-        "Coding", "Math", "Data Analysis",
-        "Public Speaking", "Project Management", "Research",
-        "Financial Modeling"
+        "Analytical Thinking", "Adaptability", "Leadership",
+        "Creative Thinking", "Self-awareness", "Tech Literacy",
+        "Communication", "Project Management", "Research",
+        "Financial Literacy",
     ]
 
     # -----------------------------------
@@ -336,6 +329,10 @@ else:
                             st.write(opp.get('details', 'No details provided.'))
                 else:
                     st.info("No direct opportunities found in the current database tracking period.")
+
+                st.markdown("---")
+                if st.button("🤖 Talk to Advisor About These Results", use_container_width=True):
+                    st.switch_page("Tools/Chatbot.py")
 
             except json.JSONDecodeError as je:
                 st.error("Could not parse the AI output into a clean table structure.")

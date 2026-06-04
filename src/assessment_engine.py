@@ -2,7 +2,7 @@ import streamlit as st
 #import pandas as pd
 
 
-def run_assessment(title, questions, category_mapping, session_key, return_page="Tools/Recommender.py"):
+def run_assessment(title, questions, category_mapping, session_key, return_page="Tools/Recommender.py", advisor_page=None):
     """
     Reusable Streamlit assessment engine.
 
@@ -83,8 +83,13 @@ def run_assessment(title, questions, category_mapping, session_key, return_page=
                 col_score.markdown(f"**{score}%**")
                 st.progress(score / 100)
 
-        if st.button("⬅ Return"):
-            st.switch_page(return_page)
+        col_ret, col_adv = st.columns(2)
+        with col_ret:
+            if st.button("Go to Recommendations", use_container_width=True):
+                st.switch_page(return_page)
+        with col_adv:
+            if advisor_page and st.button("🤖 Talk to Advisor", use_container_width=True):
+                st.switch_page(advisor_page)
 
         return
 
@@ -108,6 +113,13 @@ def run_assessment(title, questions, category_mapping, session_key, return_page=
 
     existing_answer = st.session_state[responses_key].get(q_num)
 
+    def on_answer_selected():
+        selected = st.session_state[f"{session_key}_question_{q_num}"]
+        if selected is not None:
+            st.session_state[responses_key][q_num] = selected
+            if q_num < len(questions):
+                st.session_state[question_index_key] += 1
+
     current_response = st.radio(
         "Response",
         options=list(response_scale.keys()),
@@ -117,6 +129,7 @@ def run_assessment(title, questions, category_mapping, session_key, return_page=
         ),
         key=f"{session_key}_question_{q_num}",
         label_visibility="collapsed",
+        on_change=on_answer_selected,
     )
 
     # -----------------------------------
@@ -132,24 +145,9 @@ def run_assessment(title, questions, category_mapping, session_key, return_page=
                 st.session_state[question_index_key] -= 1
                 st.rerun()
 
-    # Next / Submit Button
+    # Submit Button (last question only)
     with col2:
-        # -----------------------------------
-        # Next Question
-        # -----------------------------------
-        if q_num < len(questions):
-            if st.button("Next ➡"):
-                if current_response is None:
-                    st.warning("Please select an answer.")
-                else:
-                    st.session_state[responses_key][q_num] = current_response
-                    st.session_state[question_index_key] += 1
-                    st.rerun()
-
-        # -----------------------------------
-        # Submit Assessment
-        # -----------------------------------
-        else:
+        if q_num == len(questions):
             if st.button("🚀 Submit Assessment"):
                 if current_response is None:
                     st.warning("Please select an answer.")
