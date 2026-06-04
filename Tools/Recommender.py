@@ -16,6 +16,33 @@ for key in ["skills", "interests"]:
     if f"selected_{key}" not in st.session_state:
         st.session_state[f"selected_{key}"] = []
 
+for key, val in {
+    "accommodation_needed": None,
+    "accommodation_types": [],
+    "accommodation_other": "",
+    "accommodation_denied": None,
+    "accommodation_denied_reason": "",
+    "accommodation_completed": False,
+}.items():
+    if key not in st.session_state:
+        st.session_state[key] = val
+
+
+def get_accommodation_summary():
+    if not st.session_state.get("accommodation_completed"):
+        return "Not specified"
+    needed = st.session_state.get("accommodation_needed", "Not specified")
+    if needed == "No":
+        return "No accommodations needed"
+    types = st.session_state.get("accommodation_types", []).copy()
+    other = st.session_state.get("accommodation_other", "")
+    if "Other" in types and other:
+        types[types.index("Other")] = f"Other ({other})"
+    parts = [f"Needs accommodations: {needed}"]
+    if types:
+        parts.append(f"Requested: {', '.join(types)}")
+    return "; ".join(parts)
+
 # === Load Karrierewege model ===
 @st.cache_resource
 def load_model():
@@ -27,15 +54,31 @@ def load_model():
 tokenizer, model = load_model()
 
 def runRecommender():
+    accommodation_summary = get_accommodation_summary()
+    accom_needed = st.session_state.get("accommodation_needed")
+    accom_types = st.session_state.get("accommodation_types", [])
+    has_accommodations = accom_needed in ("Yes", "Not sure") and bool(accom_types)
+
     # === Step 1: Generate starting job using OpenAI/Gemini ===
+    if has_accommodations:
+        accom_constraint = (
+            f"Accommodation needs: {accommodation_summary}\n"
+            f"    IMPORTANT: Suggest a job that is realistic for someone with these needs. "
+            f"Prefer roles that commonly offer remote work, flexible hours, low-stimulation "
+            f"environments, or assistive-technology-friendly workplaces — whichever match: "
+            f"{', '.join(accom_types)}."
+        )
+    else:
+        accom_constraint = ""
+
     prompt = f"""
-    Based on the following student profile, suggest one starting job they could pursue after school 
+    Based on the following student profile, suggest one starting job they could pursue after school
     (e.g., IT Assistant, Lab Technician, Sales Trainee). Be concise.
 
     Interests: {', '.join(interests)}
     Skills: {', '.join(skills)}
     Education: {education}
-
+    {accom_constraint}
     Only return the job title and nothing else.
     """
     if UseOpenAi:
@@ -122,12 +165,24 @@ def runRecommender():
             soup = BeautifulSoup(html, "html.parser")
             career_data = soup.get_text(separator="\n")
 
+            accom_directive = ""
+            if has_accommodations:
+                accom_directive = f"""
+                IMPORTANT — ACCOMMODATION REQUIREMENTS:
+                The student requires: {', '.join(accom_types)}
+                You MUST address accommodations for EVERY institution and EVERY opportunity:
+                - For each institution: state specifically whether it offers support for the student's needs, or write "Not confirmed".
+                - For each opportunity: note whether the employer/sector is known for inclusive hiring, remote-friendly roles, or flexible arrangements that match the student's needs, or write "Not confirmed".
+                Do not skip this — it is a mandatory part of every recommendation.
+                """
+
             prompt = f"""
                 Student Profile:
+                Accommodation needs: {accommodation_summary}
                 Interests: {', '.join(interests)}
                 Skills: {', '.join(skills)}
                 Education: {education}
-
+                {accom_directive}
                 Recommended Job:
                 {starting_job} and {recommending_job}
 
@@ -138,8 +193,8 @@ def runRecommender():
 
                 1. Identify skill gaps between the student and the recommended job.
                 2. List skills the student should learn.
-                3. Suggest relevant universities, colleges, or training providers.
-                4. List any open opportunities mentioned in the database.
+                3. Suggest relevant universities, colleges, or training providers. Prefer institutions that support the student's accommodation needs.
+                4. List any open opportunities from the database. Prefer employers or sectors with inclusive or flexible work practices.
                 5. Explain why each recommendation is relevant.
 
                 CRITICAL REQUIREMENT: You must output ONLY a valid JSON object. Do not include any conversational text, markdown formatting blocks (like ```json), introduction, or wrap-up commentary. Start your response with "{" and end it with "}".
@@ -163,13 +218,15 @@ def runRecommender():
                     {{
                     "institution": "string (Full name of the university or training center)",
                     "type": "string (e.g., Public University, Private University, Online Bootcamp)",
-                    "relevance": "string (Specific reason why this institution fixes the gap)"
+                    "relevance": "string (Specific reason why this institution fixes the gap)",
+                    "accommodation_notes": "string (How this institution supports the student's specific accommodation needs, or 'Not confirmed')"
                     }}
                 ],
                 "open_opportunities": [
                     {{
                     "employer_or_sector": "string (Target companies or industry sectors)",
-                    "details": "string (Context on why they are hiring for this skillset)"
+                    "details": "string (Context on why they are hiring for this skillset)",
+                    "accommodation_notes": "string (Known inclusive hiring practices, remote or flexible options that match the student's needs, or 'Not confirmed')"
                     }}
                 ]
                 }}
@@ -249,7 +306,12 @@ if showForm:
         st.write("Don’t know your skills yet? Take the assessment:")
 
         if st.button("🧠 Take Skill Assessment"):
-            st.switch_page("Profile/Skill.py") 
+            st.switch_page("Profile/Skill.py")
+
+    if not st.session_state.get("accommodation_completed"):
+        st.write("Have accommodation needs? Let us know so we can tailor results:")
+        if st.button("♿ Accommodation Needs"):
+            st.switch_page("Profile/Accommodation.py")
 
     education_list = ["Grade 10", "Grade 11", "Grade 12", "Post-matric / University"]
 
@@ -314,8 +376,13 @@ else:
                 st.subheader("🏛️ Recommended Training Institutions")
                 if data.get("recommended_institutions"):
                     df_inst = pd.DataFrame(data["recommended_institutions"])
-                    df_inst.columns = ["Institution / Provider", "Type", "Strategic Relevance"]
-                    
+                    has_accom_col = "accommodation_notes" in df_inst.columns
+                    if has_accom_col:
+                        df_inst = df_inst[["institution", "type", "relevance", "accommodation_notes"]]
+                        df_inst.columns = ["Institution / Provider", "Type", "Strategic Relevance", "Accommodation Support"]
+                    else:
+                        df_inst = df_inst[["institution", "type", "relevance"]]
+                        df_inst.columns = ["Institution / Provider", "Type", "Strategic Relevance"]
                     st.dataframe(df_inst, width="stretch", hide_index=True)
                 else:
                     st.info("No specific institutions recommended.")
@@ -328,6 +395,9 @@ else:
                     for opp in data["open_opportunities"]:
                         with st.expander(f"📌 {opp.get('employer_or_sector', 'Target Sector')}", expanded=True):
                             st.write(opp.get('details', 'No details provided.'))
+                            accom_note = opp.get('accommodation_notes')
+                            if accom_note:
+                                st.markdown(f"**Accommodation Support:** {accom_note}")
                 else:
                     st.info("No direct opportunities found in the current database tracking period.")
 

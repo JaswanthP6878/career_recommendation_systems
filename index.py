@@ -47,6 +47,7 @@ logout_page = st.Page(logout, title="Log out", icon=":material/logout:")
 Person = st.Page("Profile/Person.py", title="My Info", icon=":material/person:", default=True)
 Interest = st.Page("Profile/Interest.py", title="Interest", icon=":material/favorite:")
 Skill = st.Page("Profile/Skill.py", title="Skills", icon=":material/favorite:")
+Accommodation = st.Page("Profile/Accommodation.py", title="Accommodation", icon=":material/accessibility_new:")
 
 Recommender = st.Page("Tools/Recommender.py", title="Recommendations", icon=":material/compare_arrows:")
 Chatbot = st.Page("Tools/Chatbot.py", title="Live Advisor", icon=":material/smart_toy:")
@@ -54,7 +55,7 @@ Chatbot = st.Page("Tools/Chatbot.py", title="Live Advisor", icon=":material/smar
 if st.session_state.logged_in:
     pg = st.navigation(
         {
-            "Profile": [Person, Interest, Skill],
+            "Profile": [Person, Interest, Skill, Accommodation],
             "Tools": [Recommender, Chatbot],
             "Account": [logout_page],
         }

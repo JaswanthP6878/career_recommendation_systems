@@ -1,0 +1,53 @@
+{
+  "section": "Accommodation Needs in Education or Work",
+  "questions": [
+    {
+      "id": 1,
+      "question": "Do you need any accommodations to fully take part in education or work?",
+      "type": "single_choice",
+      "options": ["Yes", "No", "Not sure"]
+    },
+    {
+      "id": 2,
+      "question": "If yes, what accommodations would help you?",
+      "type": "multi_choice",
+      "options": [
+        "Flexible deadlines or work hours",
+        "Sign language interpreter",
+        "Accessible learning materials (large print, braille, audio)",
+        "Captions for videos or meetings",
+        "Quiet or reduced-stimulation workspace",
+        "Modified tasks or workload",
+        "Assistive technology or software",
+        "Physical access changes (ramps, seating)",
+        "Remote participation options",
+        "Mental health or psychosocial support",
+        "Other"
+      ]
+    },
+    {
+      "id": 3,
+      "question": "If 'Other', please specify:",
+      "type": "text",
+      "depends_on": {
+        "question_id": 2,
+        "value": "Other"
+      }
+    },
+    {
+      "id": 4,
+      "question": "Have you ever asked for accommodations and not received them?",
+      "type": "single_choice",
+      "options": ["Yes", "No", "Prefer not to say"]
+    },
+    {
+      "id": 5,
+      "question": "If yes, please specify the main reason given:",
+      "type": "text",
+      "depends_on": {
+        "question_id": 4,
+        "value": "Yes"
+      }
+    }
+  ]
+}

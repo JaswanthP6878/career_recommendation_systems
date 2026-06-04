@@ -21,6 +21,22 @@ else:
     model = genai.GenerativeModel("gemini-3.5-flash")
 
 
+def _accommodation_context():
+    if not st.session_state.get("accommodation_completed"):
+        return "Not specified"
+    needed = st.session_state.get("accommodation_needed")
+    if needed == "No":
+        return "No accommodations needed"
+    types = st.session_state.get("accommodation_types", []).copy()
+    other = st.session_state.get("accommodation_other", "")
+    if "Other" in types and other:
+        types[types.index("Other")] = f"Other ({other})"
+    parts = [f"Needs accommodations: {needed}"]
+    if types:
+        parts.append(f"Requested: {', '.join(types)}")
+    return "; ".join(parts)
+
+
 prompt = f"""
 You are Monewa, an experienced carreer advisor in Africa.
 
@@ -37,6 +53,9 @@ they're interested in {st.session_state["selected_interests"] if "selected_inter
 they have following skills: {st.session_state["selected_skills"] if "selected_skills" in st.session_state else None}
 
 they might be good fit for {st.session_state["recommending_jobs"] if "recommending_jobs" in st.session_state else None}
+
+Accommodation needs: {_accommodation_context()}
+CRITICAL: If the student has accommodation needs listed above, you MUST address them whenever you suggest a job, school, or opportunity. Always explain specifically whether and how that option can support their needs. Never recommend an option without addressing its accessibility.
 
 They may need help to understands
 - all possible career option.
