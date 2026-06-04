@@ -310,7 +310,7 @@ if showForm:
 
     if not st.session_state.get("accommodation_completed"):
         st.write("Have accommodation needs? Let us know so we can tailor results:")
-        if st.button("♿ Accommodation Needs"):
+        if st.button("Accommodation Needs"):
             st.switch_page("Profile/Accommodation.py")
 
     education_list = ["Grade 10", "Grade 11", "Grade 12", "Post-matric / University"]

@@ -17,7 +17,7 @@ ACCOMMODATION_OPTIONS = [
     "Other",
 ]
 
-st.title("♿ Accommodation Needs")
+st.title("Accommodation Needs")
 st.caption("Your responses help us find opportunities and institutions that meet your needs.")
 
 for key, val in {
