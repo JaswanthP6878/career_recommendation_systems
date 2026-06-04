@@ -60,6 +60,9 @@ def run_assessment(title, questions, category_mapping, session_key, return_page=
 
     if question_index_key not in st.session_state:
         st.session_state[question_index_key] = 1
+    elif st.session_state[question_index_key] > len(questions):
+        st.session_state[question_index_key] = 1
+        st.session_state[responses_key] = {}
 
     if responses_key not in st.session_state:
         st.session_state[responses_key] = {}
@@ -85,7 +88,7 @@ def run_assessment(title, questions, category_mapping, session_key, return_page=
 
         col_ret, col_adv = st.columns(2)
         with col_ret:
-            if st.button("Go to Recommendations", use_container_width=True):
+            if st.button("Career Recommendations", use_container_width=True):
                 st.switch_page(return_page)
         with col_adv:
             if advisor_page and st.button("🤖 Talk to Advisor", use_container_width=True):
@@ -145,6 +148,16 @@ def run_assessment(title, questions, category_mapping, session_key, return_page=
                 st.session_state[question_index_key] -= 1
                 st.rerun()
 
+    with col2:
+        # Next button — only shown when revisiting an already-answered question.
+        # on_change handles auto-advance for fresh questions, but won't fire
+        # if the user selects the same answer they previously chose.
+        if q_num < len(questions) and existing_answer is not None:
+            if st.button("Next ➡"):
+                st.session_state[responses_key][q_num] = current_response or existing_answer
+                st.session_state[question_index_key] += 1
+                st.rerun()
+
     # Submit Button (last question only)
     with col2:
         if q_num == len(questions):
@@ -170,7 +183,7 @@ def run_assessment(title, questions, category_mapping, session_key, return_page=
                     results = {}
                     for category, q_list in category_mapping.items():
                         raw_score = sum(
-                            numeric_responses[q]
+                            numeric_responses.get(q, 3)
                             for q in q_list
                         )
                         max_score = len(q_list) * 5

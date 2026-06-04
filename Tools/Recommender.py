@@ -211,10 +211,11 @@ if showForm:
     st.write("Answer a few questions to get a personalized career suggestion!")
 
     # === Inputs ===
+    interest_options = ["Entrepreneurship", "Information Technology (IT)", "Business", "Healthcare", "Engineering", "Media", "Finance", "AI", "Design", "Education"]
     interests = st.multiselect(
         "What are your interests?",
-        ["Entrepreneurship", "Information Technology (IT)", "Business", "Healthcare", "Engineering", "Media", "Finance", "AI", "Design", "Education"],
-        default=st.session_state["selected_interests"] # Get Saved Interests from Session State
+        interest_options,
+        default=[v for v in st.session_state["selected_interests"] if v in interest_options]
     )
 
     if st.session_state["selected_interests"] == []:
@@ -241,7 +242,7 @@ if showForm:
     skills = st.multiselect(
         "What skills do you have?",
         skill_options,
-        default=st.session_state["selected_skills"] # Get Saved Skills from Session State
+        default=[v for v in st.session_state["selected_skills"] if v in skill_options]
     )
 
     if st.session_state["selected_skills"] == []:
